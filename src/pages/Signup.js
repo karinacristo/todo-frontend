@@ -1,31 +1,31 @@
-// src/pages/Login.js
+// src/pages/Signup.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
-      // Salvar o token no localStorage
+      const response = await axios.post('http://localhost:5000/api/auth/signup', { email, password });
+      // Salvar o token no localStorage após cadastro
       localStorage.setItem('token', response.data.token);
-      navigate('/tasks'); // Redireciona para a página de tarefas após login
+      navigate('/tasks'); // Redireciona para a página de tarefas após cadastro
     } catch (err) {
-      setError('Credenciais inválidas');
+      setError('Erro ao cadastrar usuário');
     }
   };
 
   return (
     <div>
-      <h1>Login</h1>
-      <form onSubmit={handleLogin}>
+      <h1>Cadastro</h1>
+      <form onSubmit={handleSignup}>
         <div>
           <label>Email:</label>
           <input
@@ -44,11 +44,11 @@ const Login = () => {
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Cadastrar</button>
       </form>
       {error && <p>{error}</p>}
     </div>
   );
 };
 
-export default Login;
+export default Signup;
