@@ -20,7 +20,7 @@ const Signup = () => {
     setError("");
 
     try {
-      const response = await axios.post("/signup", formData); // Envia os dados ao endpoint de signup
+      const response = await axios.post("/auth/signup", formData); // Envia os dados ao endpoint de signup
       console.log("Usuário criado:", response.data);
       navigate("/login"); // Redireciona para a página de login após o sucesso
     } catch (error) {
