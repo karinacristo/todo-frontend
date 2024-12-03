@@ -1,20 +1,14 @@
-// src/components/TaskList.js
 import React from 'react';
 
-const TaskList = ({ tasks, onComplete, onDelete }) => {
+const TaskList = ({ tasks }) => {
   return (
-    <div>
-      <h3>Lista de Tarefas</h3>
+    <div className="task-list">
+      <h3>Your Tasks</h3>
       <ul>
         {tasks.map((task) => (
-          <li key={task._id}>
-            <h4>{task.title}</h4>
-            <p>{task.description}</p>
-            <p>{task.completed ? 'Concluída' : 'Pendente'}</p>
-            <button onClick={() => onComplete(task._id)}>
-              Marcar como completa
-            </button>
-            <button onClick={() => onDelete(task._id)}>Excluir</button>
+          <li key={task._id} className="task-item">
+            <span>{task.title}</span>
+            <button className="btn-delete">Delete</button>
           </li>
         ))}
       </ul>

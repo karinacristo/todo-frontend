@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api/auth/signup', // URL do seu backend
+  baseURL: 'https://todo-api-backend-76f45363b049.herokuapp.com', // URL do seu backend no Heroku
 });
 
 export default api;

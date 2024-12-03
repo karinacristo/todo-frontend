@@ -1,26 +1,19 @@
-// src/components/Navbar.js
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import './Navbar.css';  // Se desejar estilos exclusivos para o Navbar
 
 const Navbar = () => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem('token'); // Remove o token
-    navigate('/login'); // Redireciona para a página de login
-  };
-
   return (
-    <nav>
-      <h2>Todo App</h2>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/tasks">Tasks</Link></li>
-        <li><Link to="/login">Login</Link></li>
-      </ul>
-      {localStorage.getItem('token') && (
-        <button onClick={handleLogout}>Logout</button>
-      )}
+    <nav className="navbar">
+      <div className="navbar-logo">
+        <h2>To-Do App</h2>
+      </div>
+      <div className="navbar-links">
+        <Link to="/home" className="navbar-link">Home</Link>
+        <Link to="/tasks" className="navbar-link">Tasks</Link>
+        <Link to="/login" className="navbar-link">Login</Link>
+        <Link to="/signup" className="navbar-link">Signup</Link>
+      </div>
     </nav>
   );
 };
