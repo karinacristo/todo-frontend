@@ -1,7 +1,23 @@
-import axios from 'axios';
+const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
 
-const api = axios.create({
-  baseURL: 'https://todo-api-backend-76f45363b049.herokuapp.com/api', // URL do seu backend no Heroku
-});
+export const login = async (credentials) => {
+  const response = await fetch(`${API_URL}/auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(credentials),
+  });
+  return response.json();
+};
 
-export default api;
+export const signup = async (userData) => {
+  const response = await fetch(`${API_URL}/auth/signup`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userData),
+  });
+  return response.json();
+};

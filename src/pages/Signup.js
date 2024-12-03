@@ -1,66 +1,51 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "../services/api"; // Certifique-se que o axios está configurado corretamente
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Certifique-se que o React Router está configurado
+import { signup } from '../services/api'; // Importe a função signup
 
 const Signup = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Evita o comportamento padrão de recarregar a página
-    setError("");
+    e.preventDefault();
+    setError(''); // Limpa erros anteriores
 
     try {
-      const response = await axios.post("/auth/signup", formData); // Envia os dados ao endpoint de signup
-      console.log("Usuário criado:", response.data);
-      navigate("/login"); // Redireciona para a página de login após o sucesso
-    } catch (error) {
-      console.error("Erro no signup:", error);
-      if (error.response && error.response.data.message) {
-        setError(error.response.data.message);
+      const response = await signup({ email, password });
+      if (response.message) {
+        console.log('Usuário criado com sucesso:', response);
+        navigate('/login'); // Redireciona para a página de login após o cadastro
       } else {
-        setError("Ocorreu um erro ao tentar criar a conta.");
+        setError(response.error || 'Erro ao criar conta.');
       }
+    } catch (err) {
+      console.error('Erro ao criar conta:', err);
+      setError('Erro ao conectar ao servidor.');
     }
   };
 
   return (
     <div className="signup-container">
-      <h1>Crie sua conta</h1>
+      <h2>Crie sua conta</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Senha:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
         <button type="submit">Cadastrar</button>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
       </form>
     </div>
   );
